@@ -16,3 +16,12 @@ code {
     monospace;
 }
 
+
+@media screen and ( max-width: 600px){
+  body{
+    
+background-image: url(./weatherimg.png);
+background-size: 80rem;
+
+  }
+}
