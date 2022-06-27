@@ -5,9 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url(./weatherimg.png);
-  background-size: cover;
   
+  background: mediumturquoise;
 }
 
 code {
@@ -17,11 +16,3 @@ code {
 }
 
 
-@media screen and ( max-width: 600px){
-  body{
-    
-background-image: url(./weatherimg.png);
-background-size: 80rem;
-
-  }
-}

@@ -3,7 +3,7 @@ import styles from "./Weather.module.css";
 
 const Weather = () => {
   const [city, setCity] = useState();
-  const [searchCity, setSearchCity] = useState('pune');
+  const [searchCity, setSearchCity] = useState("pune");
   const [des, setDes] = useState();
   const [country, setCountry] = useState();
 
@@ -17,6 +17,7 @@ const Weather = () => {
       setCity(responseData.main, responseData.weather[0].weather);
       setDes(responseData.weather[0].description);
       setCountry(responseData.sys.country);
+      console.log(responseData);
     };
 
     fetchApi();
@@ -24,6 +25,8 @@ const Weather = () => {
 
   const inputChangeHandler = (event) => {
     setSearchCity(event.target.value.toUpperCase());
+    setCity("");
+    searchCity('')
   };
 
   const dateBuilder = (d) => {
@@ -52,53 +55,39 @@ const Weather = () => {
   };
 
   return (
-    <>
-      <h1>Weather App</h1>
-      <div className={styles.form}>
-        <div>
-          <input
-            className={styles.inputField}
-            type="text"
-            value={searchCity}
-            placeholder="Search"
-            onChange={inputChangeHandler}
-            maxLength={10}
-          />
-
-          {!city ? (
-            <div className={styles.error}>
-              <p>No Data Found.</p>
+    <section className={styles.form}>
+      <main>
+        <input
+          className={styles.inputField}
+          type="text"
+          value={searchCity}
+          placeholder="Search"
+          onChange={inputChangeHandler}
+          maxLength={10}
+        />
+        {!city ? (
+          <div className={styles.error}>
+            <p>No data Found</p>
+          </div>
+        ) : (
+          <div className={styles.location}>
+            {searchCity.toUpperCase()}
+            <div className={styles.country}>"{country}"</div>
+            <div className={styles.date}>{dateBuilder(new Date())}</div>
+            <div className={styles.temparature}>
+              {city.temp}
+              <p className={styles.degcel}>°C</p>
+              <div className={styles.description}>
+                <h5>{des}</h5>
+              </div>
             </div>
-          ) : (
-            <>
-              <div className={styles.locationBox}>
-                <div className={styles.location}>
-                  {searchCity}
-                  <div className={styles.country}>"{country}"</div>
-                </div>
-              </div>
-
-              <div className={styles.date}>{dateBuilder(new Date())}</div>
-
-              <div className={styles.weatherBox}>
-                <div className={styles.temparature}>
-                  {city.temp}
-                  <p className={styles.degcel}>°C</p>
-                </div>
-
-                <div className={styles.description}>
-                  <h5>{des}</h5>
-                </div>
-              </div>
-
-              <div className={styles.temMinMax}>
-                Min: {city.temp_min} | Mix: {city.temp_max}
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </>
+            <div className={styles.temMinMax}>
+              Min: {city.temp_min} | Mix: {city.temp_max}
+            </div>
+          </div>
+        )}
+      </main>
+    </section>
   );
 };
 
