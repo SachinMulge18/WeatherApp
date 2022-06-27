@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import styles from "./Weather.module.css";
 
 const Weather = () => {
-  const [city, setCity] = useState(null);
-  const [searchCity, setSearchCity] = useState("pune");
+  const [city, setCity] = useState();
+  const [searchCity, setSearchCity] = useState('pune');
   const [des, setDes] = useState();
+  const [country, setCountry] = useState();
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -15,6 +16,7 @@ const Weather = () => {
 
       setCity(responseData.main, responseData.weather[0].weather);
       setDes(responseData.weather[0].description);
+      setCountry(responseData.sys.country);
     };
 
     fetchApi();
@@ -46,7 +48,7 @@ const Weather = () => {
     let month = months[d.getMonth()];
     let year = d.getFullYear();
 
-    return `${day}: ${date}, ${month}: ${year}`;
+    return `${day}, ${month} ${date}, ${year}`;
   };
 
   return (
@@ -55,9 +57,9 @@ const Weather = () => {
       <div className={styles.form}>
         <div>
           <input
-            type="search"
-            value={searchCity}
             className={styles.inputField}
+            type="text"
+            value={searchCity}
             placeholder="Search"
             onChange={inputChangeHandler}
             maxLength={10}
@@ -70,7 +72,10 @@ const Weather = () => {
           ) : (
             <>
               <div className={styles.locationBox}>
-                <div className={styles.location}>{!searchCity}</div>
+                <div className={styles.location}>
+                  {searchCity}
+                  <div className={styles.country}>"{country}"</div>
+                </div>
               </div>
 
               <div className={styles.date}>{dateBuilder(new Date())}</div>
